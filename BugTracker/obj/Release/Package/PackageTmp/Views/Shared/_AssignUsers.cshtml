@@ -1,0 +1,28 @@
+﻿﻿@model BugTracker.Models.AssignUsersToProjVM
+@{
+    ViewBag.Title = "AssignProjectsViewModel";
+}
+<link href="~/lou-multi-select-cf6d6c6/css/multi-select.css" rel="stylesheet" />
+<h3 class="projectDetailsHeader">Assign Users</h3>
+
+@using (Html.BeginForm("AssignUsers", "Projects", FormMethod.Post))
+            {
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    @Html.ListBox("SelectedUsers", Model.userList, new { @id = "myselect", multiple = "multiple" })
+    <br />
+    <button type="submit" id="assignUsersButton">
+        Submit
+    </button>
+}
+
+<script src="~/assets/js/jquery/jquery-2.1.0.min.js"></script>
+<script src="~/lou-multi-select-cf6d6c6/js/jquery.multi-select.js"></script>
+<script>
+    $('#myselect').multiSelect({
+        selectableHeader: "<div class='custom-header'>Available</div>",
+        selectionHeader: "<div class='custom-header'>Current Team</div>"
+    })
+</script>
+
+

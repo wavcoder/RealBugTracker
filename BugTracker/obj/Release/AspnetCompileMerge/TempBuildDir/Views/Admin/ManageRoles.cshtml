@@ -1,0 +1,40 @@
+﻿
+@model BugTracker.Models.UsersInRoleModel
+@{
+    ViewBag.Title = "ManageRoles";
+
+}
+
+<h2>RoleManagement</h2>
+
+
+@using (Html.BeginForm("ManageRoles", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <hr />
+    <h4>User Name : </h4>
+    <div class="row" style="margin-left: 5px">
+        @Model.firstName
+        @Model.lastName
+    </div>
+    <hr />
+    <h4>Choose Role(s) To Be Assigned: </h4>
+    @Html.ListBox("SelectedRoles", Model.roleList)
+    <h6>
+        <em>
+            (To choose multiple roles "Control + click" )
+        </em>
+    </h6>
+    <hr />
+
+    <button type="submit">
+        Submit
+    </button>
+}
+
+<hr />
+
+<button class="btn-sm btn-default">
+    @Html.ActionLink("Back To List", "Index")
+</button>

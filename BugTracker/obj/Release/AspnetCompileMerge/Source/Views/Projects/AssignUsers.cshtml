@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "AssignUsers";
+    ViewBag.Title = "AssignUsersToProjVM";
+}
+﻿@model BugTracker.Models.AssignUsersToProjVM
+
+<h2>Assign Users</h2>
+
+@using (Html.BeginForm("AssignUsers", "Projects", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <h3>Project Name:  @Model.projectName</h3>
+   
+    <br />
+    @Html.ListBox("SelectedUsers", Model.userList)
+    <br />
+    <br />
+
+
+    <button type="submit" class="btn btn-primary">
+        Submit
+    </button>
+    @*<button type="button" class="btn btn-primary button-left" onclick="goBack()">Back to Projects List</button>*@
+    <button class="btn btn-default">
+        @Html.ActionLink("Back To Projects List", "Index")
+    </button>
+        
+}
+

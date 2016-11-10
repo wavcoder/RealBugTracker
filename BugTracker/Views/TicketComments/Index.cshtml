@@ -1,0 +1,95 @@
+﻿﻿@model IEnumerable<BugTracker.Models.TicketComments>
+   @using Microsoft.AspNet.Identity;
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+@{
+    ViewBag.Title = "Index";
+   }
+
+
+<h2>Ticket Comments</h2>
+@ViewBag.Nocomms
+
+<table class="stripe hover table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.ProjectId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ticket.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="10%">
+                    @Html.DisplayFor(modelItem => item.Ticket.ProjectId)
+                </td>
+                <td width="15%">
+                    @Html.DisplayFor(modelItem => item.Ticket.Title)
+                </td>
+                <td width="10%">
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                </td>
+                <td width="30%">
+                    @Html.Raw(item.Comment)
+                </td>
+ 
+                <td width="20%">
+                @{
+                    var curUser = User.Identity.GetUserId();
+
+                    if (User.IsInRole("Admin") || User.IsInRole("ProjectManager") || curUser == item.UserId)
+                    {
+                      <button class="btn-xs btn-default">
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+                    </button>
+
+                    <button class="btn-xs btn-default">
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </button>
+                    }
+
+                    <button class="btn-xs btn-default">
+                        @Html.ActionLink("Details", "Details", new { id = item.Id })
+                    </button>
+                    }
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<p>
+    <button class="btn btn-default">
+
+        @Html.ActionLink("Back to Tickets", "Index", "Tickets")
+        </button>
+</p>
+<!--jQuery-->
+<script type = "text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>
+
+
+<script type = "text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+            @*@Scripts.Render("~/bundles/jquery")*@
+
+            <!--DataTables-->
+            <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+
+                    <script>
+                        $('table').DataTable();
+                    </script>

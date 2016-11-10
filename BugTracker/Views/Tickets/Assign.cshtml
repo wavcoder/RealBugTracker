@@ -1,0 +1,91 @@
+﻿
+@model BugTracker.Models.Tickets
+@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.Title = "AssignedToUserId";
+
+}
+
+<h2>Assign Tickets To Developers </h2>
+@using (Html.BeginForm("Assign", "Tickets", FormMethod.Post, new { enctype = "Multipart/form-data" }))
+
+{
+    @Html.AntiForgeryToken()
+
+    var ownerid = User.Identity.GetUserId();
+    <input type="hidden" name="OwnerUserId" value="@ownerid" />
+
+    <div class="form-horizontal">
+     
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <input type="hidden" name="Description" value="@Model.Description" />
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <input type="hidden" name="ProjectId" value="@Model.ProjectId" />
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.ProjectId, "ProjectId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ProjectId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProjectId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <input type="hidden" name="TicketTypeId" value="@Model.TicketTypeId" />
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.TicketTypeId, "TicketTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TicketTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TicketTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+        <input type="hidden" name="TicketPrioritiesId" value="@Model.TicketPrioritiesId" />
+            @*<div class="form-group">
+
+                @Html.LabelFor(model => model.TicketPrioritiesId, "TicketPrioritiesId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TicketPrioritiesId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TicketPrioritiesId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.AssignedToUserId, "AssignedToUserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <input type="hidden" name="TicketStatusId" value=2 />
+        <input type="hidden" name="Created" value="@Model.Created" />
+
+       
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+<button class="btn btn-default">
+    @Html.ActionLink("Back To List", "Index")
+</button>

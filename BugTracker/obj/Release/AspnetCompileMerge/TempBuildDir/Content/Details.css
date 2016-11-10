@@ -1,0 +1,13 @@
+﻿/* This is the style for our default (even) row */
+.dt1
+.dd1
+ {
+    background-color: #FFF;
+}
+ 
+/* This is the style for our striped (odd) row */
+.stripe
+#stripe
+ {
+    background-color: #B3BAC7;
+}

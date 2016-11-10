@@ -1,0 +1,183 @@
+﻿@using Microsoft.AspNet.Identity;
+@model IEnumerable<BugTracker.Models.Tickets>
+
+
+ <!--CSS-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" />
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Your Tickets</h2>
+
+@if (User.Identity.IsAuthenticated) {
+    if (/*User.IsInRole("Developer") || User.IsInRole("ProjectManager") ||*/ User.IsInRole("Submitter"))
+    {<p>
+         <button class="btn-sm btn-default">
+             @Html.ActionLink("Create New", "Create")
+         </button>
+  
+</p>}
+
+
+    <table class="stripe hover table">
+
+        <thead>
+            <tr>
+                <th>
+                    @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
+                    <p>Ticket Number</p>
+                </th>
+
+                <th>
+                    @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
+                    <p>Assigned To</p>
+                </th>
+
+                <th>
+                    @*@Html.DisplayNameFor(model => model.Project.Name)*@
+                    <p>Project Name</p>
+                </th>
+
+                <th>
+
+                    <p>Type</p>
+                </th>
+                <th>
+
+                    <p>Title</p>
+                </th>
+
+
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AssignedToUser.FirstName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Project.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TicketType.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+
+                    
+                    @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
+                    {
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Details", "Details", new { id = item.Id })</button>
+                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
+                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Assign", "Assign", new { id = item.Id })</button>
+                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
+                        <div class="btn-group">
+                            <button type="button" class="btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                Comments<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("View", "Index", "TicketComments", new {id @*ticketid*@ = item.Id }, null)</li>
+                                <li>@Html.ActionLink("Create", "Create", "TicketComments", new { ticketid = item.Id }, null)</li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" class="btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+                                Attachments<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("View ", "Index", "TicketAttachments", new { ticketid = item.Id }, null)</li>
+                                <li>@Html.ActionLink("Create", "Create", "TicketAttachments", new { ticketid = item.Id }, null)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+            </td>}
+                    else
+                    {
+                        <td>
+
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
+                                <button type="button" class="btn btn-default">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Comments<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><button type="submit"> @Html.ActionLink("View", "Index", "TicketComments", new { ticketid = item.Id }, null)</button></li>
+                                        <li><button type="submit">@Html.ActionLink("Create", "Create", "TicketComments", new { ticketid = item.Id }, null)</button></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                        Attachments<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><button type="submit">@Html.ActionLink("View ", "Index", "TicketAttachments", new { ticketid = item.Id }, null)</button></li>
+                                        <li><button type="submit">@Html.ActionLink("Create", "Create", "TicketAttachments", new { ticketid = item.Id }, null)</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>||</span>
+                            @Html.ActionLink("Comments", "Index", "TicketComments", new { ticketid = item.Id }, null)<span>||</span>
+                            @Html.ActionLink("Attachments", "Index", "TicketAttachments", new { ticketid = item.Id }, null)*@
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+else
+{
+    <hr />
+    <h2>Please Log In</h2> <h4> (MUST BE LOGGED IN TO VIEW TICKETS)</h4>
+}
+@*@if (User.IsInRole("Admin"))
+{<h3>Ticket Administration</h3><br />
+    
+
+<button class="btn-xs btn-default">
+    @Html.ActionLink("Ticket Types", "Index","TicketTypes")
+</button>
+<button class="btn-xs btn-default">
+    @Html.ActionLink("Ticket Priorities", "Index", "TicketPriorities")
+</button>
+<button class="btn-xs btn-default">
+    @Html.ActionLink("Ticket Statuses", "Index", "TicketStatuses")
+</button>
+}*@
+
+    <!--jQuery-->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>
+
+
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")*@
+
+    <!--DataTables-->
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+
+
+
+    <script>
+        $('table').DataTable();
+    </script>

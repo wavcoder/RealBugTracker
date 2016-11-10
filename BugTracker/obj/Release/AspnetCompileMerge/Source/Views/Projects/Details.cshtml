@@ -1,0 +1,90 @@
+﻿@model BugTracker.Models.Projects
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Project Details</h2>
+
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <hr />
+        <dt>
+            <h5><b>Project Manager </b></h5>
+            @*@Html.DisplayNameFor(model => model.OwnerName)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnerName)
+        </dd>
+
+        <dd>
+            <hr />
+        <dt>
+            <h5><b>Description </b></h5>
+            @*@Html.DisplayNameFor(model => model.OwnerName)*@
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dd>
+            <hr />
+<dt>
+            <h5><b>Assigned Users</b></h5>
+        </dt>
+        <br />
+        <dd>
+            @foreach (var item in Model.OwnerUser)
+            {
+                @Html.DisplayFor(modelitem => item.FirstName)
+                <span>  </span>
+                @Html.DisplayFor(modelitem => item.LastName)
+                <br />
+            }
+           
+        </dd>
+
+        <dd>
+
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id })*@ 
+    <button class="btn btn-default">
+        @Html.ActionLink("Back To List", "Index")
+    </button>
+</p>
+@*<button type="button" class="btn btn-primary button-left" onclick="goBack()">Back to Projects List</button>
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>*@
+
+
+<!-- /main -->
+
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+@Scripts.Render("~/bundles/jquery")
+<!--DataTables-->
+@*<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>*@
+<script type="text/javascript" language="javascript" src="~/assets/js/plugins/datatable/jquery.dataTables.min.js"></script>
+
+<script>
+        $('.table').DataTable();
+</script>
+
+
+
+
