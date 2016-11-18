@@ -515,47 +515,49 @@ namespace BugTracker.Controllers
         {
             return View();
         }
-        // Demo Login
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public async Task<ActionResult> DemoLogin(int roleIndex)
-        //{
-        //    var model = new LoginViewModel();
-        //    model.Password = "Demo!234";
-        //    switch (roleIndex)
-        //    {
-        //        case 1:
-        //            // login as demo admin
-        //            model.Email = "DemoAdmin@email.com";
-        //            break;
-        //        case 2:
-        //            // login as demo PM
-        //            model.Email = "DemoPM@email.com";
-        //            break;
-        //        case 3:
-        //            // login as demo dev
-        //            model.Email = "DemoDev@email.com";
-        //            break;
-        //        case 4:
-        //        default:
-        //            // login as demo submitter
-        //            model.Email = "DemoSub@email.com";
-        //            break;
-        //    }
-        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-        //    switch (result)
-        //    {
-        //        case SignInStatus.Success:
-        //            return RedirectToAction("Index", "Home");
-        //        case SignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case SignInStatus.RequiresVerification:
-        //        case SignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", "Invalid login attempt.");
-        //            return View(model);
-        //    }
-        //}      
+      //  Demo Login
+       [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult> DemoLogin(int roleIndex)
+        {
+            var model = new LoginViewModel();
+            model.Password = "Demo!234";
+            switch (roleIndex)
+            {
+                case 1:
+                    // login as demo admin
+                    model.Email = "DemoAdmin@email.com";
+                    break;
+                case 2:
+                    // login as demo PM
+                    model.Email = "DemoPM@email.com";
+                    break;
+                case 3:
+                    // login as demo dev
+                    model.Email = "DemoDev@email.com";
+                    break;
+                case 4:
+                default:
+                    // login as demo submitter
+                    model.Email = "DemoSub@email.com";
+                    break;
+            }
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToAction("Index", "Home");
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+        }
+
+
         #endregion
     }
 }

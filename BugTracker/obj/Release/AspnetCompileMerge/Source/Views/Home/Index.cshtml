@@ -2,29 +2,49 @@
     ViewBag.Title = "Home Page";
 }
 <link href="~/multi-select/css/jumbotron.css" rel="stylesheet" />
+@*<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <br />
-<body background="~/multi-select/img/bugout.gif">
+<body background="~/multi-select/img/bugout.gif" ; style="animation-delay:10s">
+
     <div class="container">
-        <div class="jumbotron" style="height: 420px; width: 850px; align-content:center ">
+        <div  class="jumbotron" style="height: 520px; width: 920px; padding-top:2px; padding-bottom:1px; align-content:center ; background-color:GrayText ; border-style:groove">
+            @*<div class="jumbotron" style="height: 480px; width: 850px; align-content:center; background-color:lightgrey">*@
+           
+             <div class="col-md-4">
+                 <hr />
+                 <h2 id="bill"><span class="count">@ViewBag.usercount</span><span> </span>Users</h2>
+                 <hr />
+                <h2 id="bill"><span class="count">@ViewBag.projectcount</span><span> </span>Projects</h2>
+                 <hr />
+                <h2 id="bill"><span class="count">@ViewBag.ticketcount</span><span> </span>Tickets</h2>
+                 <h3 id="bill"><span class="count">@ViewBag.resolvedcount</span><span> </span>Resolved</h3>
+                 <h3 id="bill"><span class="count">@ViewBag.opencount</span><span> </span> Open</h3>
+                 <hr />
+                
+            </div>
+                <h1 class="h1jumbo" style="color:black; font-family:'Bookman Old Style'; padding:0">Bug Out! </h1>
+            <p @*class="lead"*@ style="color:black;padding-top:1px">
+                    is an enterprise ready bug tracking package.  It allows for the administration of roles, full spectrum project management from
+                    creation and ownership to assignment of manager, developers and users.  Additionally, this tool
+                    provides complete control of the creation, commenting and assignment of project specific fix tickets.
+                    With full ticket histories users, developers, managers and administrators can track each and every
+                    phase of their respective tickets, leaving no room for question as to it's status. @*the status of any given ticket.*@
+                    Each level of user has full access to his or her ticketing permissions. <em><i><u>Bug Out!</u></i></em>  is the ultimate
+                    bug tracking software.<br /><br />
+                </p>
+                <br />
+                <p>
+                    <!-- Trigger the modal with a button -->
 
-            <h1 style="color:black; font-family:'Bookman Old Style'">Bug Out! </h1>
-            <p class="lead" style="color:black">
-                is an enterprise ready bug tracking package.  It allows for the administration of roles, full spectrum project management from
-                creation and ownership to assignment of manager, developers and users.  Additionally, this tool
-                provides complete control of the creation, commenting and assignment of project specific fix tickets.
-                With full ticket histories users, developers, managers and administrators can track each and every
-                phase of their respective tickets, leaving no room for question as to the status of any given ticket.
-                Each level of user has full access to his or her ticketing permissions. <em><i><u>Bug Out!</u></i></em>  is the ultimate
-                bug tracking software.
-            </p>
-            <br />
-            <p> <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Login As A Guest</button></p>
-        </div>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Login As A Guest</button>
+                </p>
+            </div>
     </div>
-
-
-   
+  
+    @*<h2>@ViewBag.projectcount Projects</h2> <br />
+    <h2>@ViewBag.ticketcount Tickets</h2> <br />
+    <h2>@ViewBag.usercount Users</h2>*@
 
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -33,6 +53,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
+
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Choose Your Guest Role</h4>
                 </div>
@@ -80,3 +101,24 @@
         </div>
     </div>*@
 </body>
+<script>
+
+    //setTimeout(function() {
+
+    $('.count').each(function () {
+        $(this).prop('Counter', 0).animate({
+            Counter: $(this).text()
+        }, {
+            duration: 5000,
+            easing: 'swing',
+            step: function (now) {
+                $(this).text(Math.ceil(now));
+            }
+        });
+    });
+
+    //}, 2000);
+
+</script>
+
+

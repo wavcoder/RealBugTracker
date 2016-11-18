@@ -1,5 +1,60 @@
-﻿.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+﻿#bill
+{
+  /*width: 60px;
+	height: 60px;
+	background:blue;
+   	-moz-border-radius: 30px;
+	-webkit-border-radius: 30px;
+	border-radius: 30px;*/
+  float:left;
+  margin:5px;
+   display:inline
+ }
+
+.count
+{
+  line-height: 50px;
+  color:white;
+  margin-left:30px;
+   margin-right:25px;
+  font-size:35px;
 }
+
+.count2
+{
+  line-height: 50px;
+  color:white;
+  margin-left:30px;
+   margin-right:25px;
+  font-size:25px;
+}
+
+#talkbubble {
+  width: 120px;
+  height: 80px;
+  background: red;
+  position: relative;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  float: left;
+  margin: 20px;
+}
+
+#talkbubble:before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 26px;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-right: 26px solid red;
+  border-bottom: 13px solid transparent;
+}
+body
+{
+    align-content:center;
+}
+
+

@@ -95,9 +95,9 @@ namespace BugTracker.Controllers
 
             }
 
+            // Only return projects not marked as complete
             foreach (var project in userProjects)
             {
-                // Only return projects not marked as complete
                 Projects projects = new Projects();
                 if (!project.ProjectComplete)
                 {

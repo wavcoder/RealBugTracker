@@ -47,7 +47,7 @@ namespace BugTracker.Controllers
         }
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, ProjectManager")]
         public ActionResult Create()
         {
             var role = db.Roles.FirstOrDefault(r => r.Name == "ProjectManager");

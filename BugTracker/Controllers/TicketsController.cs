@@ -20,14 +20,6 @@ namespace BugTracker.Controllers
         UserRolesHelper roleHelper = new UserRolesHelper();
 
         // GET: Tickets
-        //public ActionResult Index()
-
-        //{
-        //    var tickets = db.Tickets;
-        //    //var tickets = db.Tickets.Include("AssignedToUser").Include("OwnerUser").Include("Project").Include("TicketPriorities").Include("TicketStatus").Include("TicketType");
-        //    return View(tickets.ToList());
-        //}
-
 
         [Authorize]
         public ActionResult Index()
@@ -192,27 +184,7 @@ namespace BugTracker.Controllers
             return View(tickets);
         }
 
-        // POST: Tickets/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Edit([Bind(Include = "Id,Title,Description,Created,Updated,ProjectId,TicketTypeId,TicketPrioritiesId,TicketStatusId,OwnerUserId,AssignedToUserId")] Tickets tickets)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Entry(tickets).State = EntityState.Modified;
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
-        //    ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
-        //    ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", tickets.ProjectId);
-        //    ViewBag.TicketPrioritiesId = new SelectList(db.TicketPriorities, "Id", "Name", tickets.TicketPrioritiesId);
-        //    ViewBag.TicketStatusId = new SelectList(db.TicketStatuses, "Id", "Name", tickets.TicketStatusId);
-        //    ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "Name", tickets.TicketTypeId);
-        //    return View(tickets);
-        //}
+
 
         //Added
         // POST: Tickets/Edit/5
@@ -229,7 +201,6 @@ namespace BugTracker.Controllers
                 HistoryHelper historyHelper = new HistoryHelper();
 
                 StringBuilder updateMessage = new StringBuilder();
-                //updateMessage.AppendFormat("The following upatates have been made to ticket: {0}\n", tickets.Id);
 
                 //Old vs new data        
                 var oldTicketInfo = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == tickets.Id);
@@ -316,7 +287,7 @@ namespace BugTracker.Controllers
                 }
 
                 {
-                    return RedirectToAction("Index", "Projects");
+                    return RedirectToAction("Index");
                 }
 
             }
@@ -329,14 +300,10 @@ namespace BugTracker.Controllers
             return View(tickets);
         }
 
-        //Added
-
-
-
-
-
 
         // GET: Tickets/Delete/5
+       
+
 
         public ActionResult Delete(int? id)
         {
@@ -353,70 +320,69 @@ namespace BugTracker.Controllers
         }
 
         // POST: Tickets/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Tickets/Delete/5
+        // It Does Not Delete record it just markes it as closed
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public async System.Threading.Tasks.Task<ActionResult> Delete(int id)
         {
-            Tickets tickets = db.Tickets.Find(id);
-            db.Tickets.Remove(tickets);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            Tickets ticket = db.Tickets.Find(id);
+            var strLoginUser = User.Identity.GetUserId();
 
+            //Sends Ticket staus change to history audit log
+            HistoryHelper audit = new HistoryHelper();
+            audit.AddHistory(ticket.Id, "Status", ticket.TicketStatus.Name, "Resolved", strLoginUser);
 
-        // GET: Tickets/DeveloperTickets
-        [Authorize(Roles = "Admin, ProjectManager, Developer")]
-        public ActionResult Developer()
-        {
-            ProjectHelper projectHelper = new ProjectHelper();
-
-            var user = User.Identity.GetUserId();
-            var currentUser = db.Users.Find(user);
-            List<Projects> devProjects = new List<Projects>();
-
-            // Create a list of the developers projects
-            // Get ALL the tickets for his/her projects.
-            //The tickets DO NOT have to be assigned to developer just the project.
-            var devProjTickets = currentUser.Project.SelectMany(t => t.Tickets.Where(s => s.TicketStatusId != 4));
-            return View(devProjTickets);
-        }
-
-        // GET: Tickets/Developer
-        [Authorize(Roles = "Admin, ProjectManager, Developer")]
-        public ActionResult DeveloperAssignedTickets()
-        {
-            var user = User.Identity.GetUserId();
-            var currentUser = db.Users.Find(user);
-            List<Tickets> ticketResults = new List<Tickets>();
-            var tickets = db.Tickets; 
-            var assignedTickets = tickets.Where(t => t.AssignedToUserId == user);
-
-            // Tickets for Developers - Assigned Tickets
-            foreach (var t in assignedTickets)
+            //Updates Status to Closed in the ticket table
+            ticket.TicketStatusId = 4;
+            var developer = db.Users.Find(ticket.AssignedToUserId);
+            if (developer != null && developer.Email != null)
             {
-                ticketResults.Add(t);
+                var svc = new EmailService();
+                var msg = new IdentityMessage();
+                msg.Destination = developer.Email;
+                msg.Subject = "Bug Tracker Update: " + ticket.Title;
+                msg.Body = ("Ticket ID: " + ticket.Id + " - " + ticket.Title + "has been resolved");
+                await svc.SendAsync(msg);
             }
-            return View(ticketResults);
+
+            db.Tickets.Attach(ticket);
+            db.Entry(ticket).Property("TicketStatusId").IsModified = true;
+            db.SaveChanges();
+
+            return RedirectToAction("Index",  new { id = ticket.Id });
         }
 
 
 
         // GET: Tickets/Assign
-        public ActionResult Assign( int? id)
+        public ActionResult Assign(int? id)
         {
+            Tickets tickets = db.Tickets.Find(id);
+            TempData["owner"] = tickets.OwnerUserId;
+            //checking to see if ticket has previously been assigned
+            if (tickets.TicketStatusId != 1)
+                { 
+            TempData["oldVal"] = db.Users.Find(tickets.AssignedToUserId).FirstName;
+                }
+            else
+                {
+                TempData["oldVal"] = "Unassigned";
+                }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tickets tickets = db.Tickets.Find(id);
+ 
             if (tickets == null)
             {
                 return HttpNotFound();
             }
             var role = db.Roles.FirstOrDefault(r => r.Name == "Developer");
             var usrs = db.Users.Where(u => u.Roles.Any(r => r.RoleId == role.Id));
+            
             ViewBag.AssignedToUserId = new SelectList(usrs, "Id", "FirstName", tickets.AssignedToUserId);
-            //ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", tickets.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", tickets.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "Name", tickets.ProjectId);
             ViewBag.TicketPrioritiesId = new SelectList(db.TicketPriorities, "Id", "Name", tickets.TicketPrioritiesId);
@@ -429,12 +395,67 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Assign([Bind(Include = "Id,AssignedToUserId,Created,OwnerUserId,Title,Description,ProjectId,TicketTypeId,TicketStatusId,TicketPrioritiesId")] Tickets tickets)
-    {
+        public async Task<ActionResult> Assign([Bind(Include = "Id,AssignedToUserId,Created,OwnerUserId,Title,Description,ProjectId,TicketTypeId,TicketStatusId,TicketPrioritiesId")] Tickets tickets)
+           
+        {
+            HistoryHelper historyHelper = new HistoryHelper();
+
+            StringBuilder updateMessage = new StringBuilder();
+
+            var oldTicketInfo = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == tickets.Id);
+
+            if (oldTicketInfo.AssignedToUserId != tickets.AssignedToUserId
+                  && oldTicketInfo.AssignedToUserId != null)
+            {
+                var oldAssignedUser = db.Users.Find(oldTicketInfo.AssignedToUserId).FirstName + " " + db.Users.Find(tickets.AssignedToUserId).LastName;
+                var newAssignedUser2 = db.Users.Find(tickets.AssignedToUserId).FirstName + " " + db.Users.Find(tickets.AssignedToUserId).LastName;
+                historyHelper.AddHistory(tickets.Id, "Assigned User", oldAssignedUser, newAssignedUser2, User.Identity.GetUserId());
+                updateMessage.AppendFormat("Assigned User: {0}, ", newAssignedUser2);
+            }
+
+            if (oldTicketInfo.AssignedToUserId == null && oldTicketInfo.AssignedToUserId != tickets.AssignedToUserId)
+            {
+                var oldAssignedUser = "Unassigned";
+                var newAssignedUser3 = db.Users.Find(tickets.AssignedToUserId).FirstName + " " + db.Users.Find(tickets.AssignedToUserId).LastName;
+                historyHelper.AddHistory(tickets.Id, "Assigned User", oldAssignedUser, newAssignedUser3, User.Identity.GetUserId());
+                updateMessage.AppendFormat("Assigned User: {0}, ", newAssignedUser3);
+           }
+            //Send Notification
+            var developer = db.Users.Find(tickets.AssignedToUserId);
+            if (developer != null && developer.Email != null)
+            {
+                var svc = new EmailService();
+                var msg = new IdentityMessage();
+                msg.Destination = developer.Email;
+                msg.Subject = "Bug Tracker Update: " + tickets.Title + " Assigned";
+                msg.Body = ("The following Ticket ID: " + tickets.Id + " - " + tickets.Title + ": " + updateMessage);
+                await svc.SendAsync(msg);
+            }
+
+
+
+
+            TicketHistories ticketHistory = new TicketHistories();
+            var  old = TempData["oldVal"];
+            var owner = TempData["owner"];
+            var newAssignedUser = db.Users.Find(tickets.AssignedToUserId).FirstName;
             if (ModelState.IsValid)
             {
-                db.Entry(tickets).State = EntityState.Modified;
+                ticketHistory.TicketId = tickets.Id;
+                ticketHistory.Property = "Ticket Assigned";
+                ticketHistory.OldValue = old.ToString();
+                ticketHistory.NewValue = newAssignedUser;
+                ticketHistory.UserId = tickets.OwnerUserId;
+                ticketHistory.ChangeDate = tickets.Created;
+                ticketHistory.Changed = true;
+             
+                db.TicketHistories.Add(ticketHistory);
+                //db.SaveChanges();
+                                                      
                 tickets.Updated = DateTime.Now;
+                tickets.OwnerUserId = owner.ToString();
+                tickets.TicketStatusId = 2;
+                db.Entry(tickets).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

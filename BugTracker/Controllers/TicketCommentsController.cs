@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BugTracker.Models;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace BugTracker.Controllers
 {
@@ -68,10 +69,21 @@ namespace BugTracker.Controllers
         //  more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TicketId,Comment")] TicketComments ticketComments)
+        public async Task<ActionResult>Create([Bind(Include = "Id,TicketId,Comment")] TicketComments ticketComments)
 
+            {
+            //Send Notification
+            var developer = db.Users.Find(ticketComments.Ticket.AssignedToUser);
+            if (developer != null && developer.Email != null)
+            {
+                var svc = new EmailService();
+                var msg = new IdentityMessage();
+                msg.Destination = developer.Email;
+                msg.Subject = "Bug Tracker Update: " + ticketComments.Ticket.Title;
+                msg.Body = ("A comment has been added to Ticket ID: " + ticketComments.Ticket.Id + " - " + ticketComments.Ticket.Title);
+                await svc.SendAsync(msg);
+            }
 
-        {
             var ticketHistory = new TicketHistories();
             var user = User.Identity.GetUserId();
             var currentUser = db.Users.Find(user);

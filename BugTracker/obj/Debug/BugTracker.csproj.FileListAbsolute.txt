@@ -40,6 +40,10 @@ C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.Owin.Security.Twitter.dll
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.Web.Infrastructure.dll
 C:\VS Projects\BugTracker\BugTracker\bin\Newtonsoft.Json.dll
 C:\VS Projects\BugTracker\BugTracker\bin\Owin.dll
+C:\VS Projects\BugTracker\BugTracker\bin\SendGrid.dll
+C:\VS Projects\BugTracker\BugTracker\bin\SendGrid.SmtpApi.dll
+C:\VS Projects\BugTracker\BugTracker\bin\SendGridMail.dll
+C:\VS Projects\BugTracker\BugTracker\bin\System.Net.Http.Formatting.dll
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Helpers.dll
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Mvc.dll
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Optimization.dll
@@ -54,6 +58,8 @@ C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.AI.Web.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.AI.WindowsServer.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.ApplicationInsights.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\VS Projects\BugTracker\BugTracker\bin\Newtonsoft.Json.xml
+C:\VS Projects\BugTracker\BugTracker\bin\System.Net.Http.Formatting.xml
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Helpers.xml
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Mvc.xml
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.Optimization.xml
@@ -62,7 +68,6 @@ C:\VS Projects\BugTracker\BugTracker\bin\System.Web.WebPages.xml
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.WebPages.Deployment.xml
 C:\VS Projects\BugTracker\BugTracker\bin\System.Web.WebPages.Razor.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Antlr3.Runtime.pdb
-C:\VS Projects\BugTracker\BugTracker\bin\Newtonsoft.Json.xml
 C:\VS Projects\BugTracker\BugTracker\bin\EntityFramework.xml
 C:\VS Projects\BugTracker\BugTracker\bin\EntityFramework.SqlServer.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.AspNet.Identity.Core.xml
@@ -79,9 +84,4 @@ C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.Owin.Security.Twitter.xml
 C:\VS Projects\BugTracker\BugTracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\VS Projects\BugTracker\BugTracker\obj\Debug\BugTracker.dll
 C:\VS Projects\BugTracker\BugTracker\obj\Debug\BugTracker.pdb
-C:\VS Projects\BugTracker\BugTracker\bin\SendGrid.dll
-C:\VS Projects\BugTracker\BugTracker\bin\SendGrid.SmtpApi.dll
-C:\VS Projects\BugTracker\BugTracker\bin\SendGridMail.dll
-C:\VS Projects\BugTracker\BugTracker\bin\System.Net.Http.Formatting.dll
-C:\VS Projects\BugTracker\BugTracker\bin\System.Net.Http.Formatting.xml
 C:\VS Projects\BugTracker\BugTracker\obj\Debug\BugTracker.csprojResolveAssemblyReference.cache

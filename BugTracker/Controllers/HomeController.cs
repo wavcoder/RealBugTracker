@@ -16,6 +16,12 @@ namespace BugTracker.Controllers
     
         public ActionResult Index()
         {
+            var ticket = db.Tickets;
+            ViewBag.projectcount = db.Projects.Count();
+            ViewBag.ticketcount = db.Tickets.Count();
+            ViewBag.resolvedcount = db.Tickets.Where(t => t.TicketStatusId == 4).Count();
+            ViewBag.opencount = db.Tickets.Where(t => t.TicketStatusId != 4).Count();
+            ViewBag.usercount = db.Users.Count();
             return View();
         }
 

@@ -1,5 +1,60 @@
-﻿.container{
-    display: flex;
-    justify-content: center;
+﻿/*.container{
+    padding:2px;
+    /*display: flex;*/
+    /*justify-content: center;
     align-items: center;
+}*/
+/*.h1jumbo{
+    padding:0px;
+    line-height:50%;
+}*/
+#bill
+{
+  /*width: 100px;
+	height: 100px;
+	background: red;
+   	-moz-border-radius: 50px;
+	-webkit-border-radius: 50px;
+	border-radius: 50px;*/
+  float:left;
+  margin:5px;
+   display:inline
+ }
+#rowdata h2
+{
+     display:inline
 }
+.count
+{
+  /*line-height: 100px;*/
+  color:white;
+  margin-left:30px;
+  font-size:25px;
+}
+
+#talkbubble {
+  width: 120px;
+  height: 80px;
+  background: red;
+  position: relative;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  float: left;
+  margin: 20px;
+}
+
+#talkbubble:before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 26px;
+  width: 0;
+  height: 0;
+  border-top: 13px solid transparent;
+  border-right: 26px solid red;
+  border-bottom: 13px solid transparent;
+}
+
+
+

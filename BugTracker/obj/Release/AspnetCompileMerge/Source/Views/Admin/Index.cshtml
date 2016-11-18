@@ -9,9 +9,9 @@
 
 <h2>Assigned Roles List</h2>
 
-<table class="stripe hover table">
+<table class="table table-striped table-hover ">
     <thead>
-        <tr>
+        <tr class="info">
             <th>
                 @Html.DisplayNameFor(model => model.user.FirstName)
             </th>
@@ -26,38 +26,38 @@
     </thead>
     <tbody>
 
-    @foreach (var item in Model)
-    {
-        using (Html.BeginForm("ManageRoles", "Admin", FormMethod.Post))
+        @foreach (var item in Model)
         {
-            @Html.AntiForgeryToken()
-            <tr>
-                <td>
-                    @item.user.FirstName
-                </td>
-                <td>
-                    @item.user.LastName
-                    @*@item.user.Email*@
-                </td>
-                <td>
-                    @foreach (var items in item.roles)
+            using (Html.BeginForm("ManageRoles", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <tr class="success">
+                    <td>
+                        @item.user.FirstName
+                    </td>
+                    <td>
+                        @item.user.LastName
+                        @*@item.user.Email*@
+                    </td>
+                    <td>
+                        @foreach (var items in item.roles)
                     {
-                        @items  <span></span>
-                    }
-                </td>
-                <td>
-                   <button class="btn-xs btn-default">
-                        @Html.ActionLink("Edit Roles", "ManageRoles", new { Id = item.user.Id })
-                    </button>
-                </td>
+                            @items  <span></span>
+                        }
+                    </td>
+                    <td>
+                        <button class="btn-xs btn-default">
+                            @Html.ActionLink("Edit Roles", "ManageRoles", new { Id = item.user.Id })
+                        </button>
+                    </td>
 
-               
-            </tr>
+
+                </tr>
             }
 
-            }
+        }
 
-        </tbody>
+    </tbody>
 </table>
 
 @section scripts{

@@ -25,7 +25,9 @@ namespace BugTracker
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       //"~/Content/bootstrap-journal.css",
-                      "~/Content/bootstrap-lumen.css",
+                      //"~/Content/bootstrap-lumen.css",
+                      //"~/Content/bootstrap-superhero.css",
+                      "~/Content/bootstrap-darkly.css",
                       //"~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }

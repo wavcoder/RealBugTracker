@@ -18,7 +18,7 @@
 
 <table class="stripe hover table">
     <thead>
-        <tr>
+        <tr class="warning">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -29,7 +29,7 @@
     </thead>
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="success">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -66,20 +66,28 @@ else if (User.IsInRole("ProjectManager"))
         </button>
     </p>
 
-    <table class="stripe hover table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OwnerName)
-            </th>
-            <th></th>
-        </tr>
+    <table class="table table-striped table-hover ">
+        <thead>
+            <tr class="warning">
 
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.OwnerName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="success">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>

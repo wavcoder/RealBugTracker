@@ -253,17 +253,21 @@
     <Compile Include="Models\UserRolesHelper.cs" />
     <Compile Include="Models\UsersInRoleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\count.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
+    <Content Include="Content\bootstrap-darkly.css" />
     <Content Include="Content\bootstrap-journal.css" />
     <Content Include="Content\bootstrap-lumen.css" />
+    <Content Include="Content\bootstrap-superhero.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Details.css" />
     <Content Include="Content\navbarstyle.css" />
+    <Content Include="Content\tablestyle.css" />
     <Content Include="lou-multi-select-a0f48de\img\circlebutton.jpg" />
     <Content Include="lou-multi-select-a0f48de\img\newprojectbutton.jpg" />
     <Content Include="lou-multi-select-a0f48de\img\projectsbutton.jpg" />
@@ -298,6 +302,7 @@
     <Content Include="multi-select\img\about.png" />
     <Content Include="multi-select\img\bugout.gif" />
     <Content Include="multi-select\img\contact.jpg" />
+    <Content Include="multi-select\img\diamond.png" />
     <Content Include="multi-select\img\portfolioicon.jpg" />
     <Content Include="multi-select\img\projects.jpg" />
     <Content Include="multi-select\img\roles.jpg" />
@@ -340,6 +345,7 @@
     <None Include="Properties\PublishProfiles\bvoss-bugtracker - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\bvoss-bugtracker - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\count.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -554,7 +560,6 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ManageRoles.cshtml" />
     <Content Include="Views\Projects\AssignUsers.cshtml" />
-    <Content Include="Views\Tickets\Developer.cshtml" />
     <Content Include="Views\TicketHistories\Index.cshtml" />
     <Content Include="Views\TicketHistories\Create.cshtml" />
     <Content Include="Views\TicketHistories\Delete.cshtml" />

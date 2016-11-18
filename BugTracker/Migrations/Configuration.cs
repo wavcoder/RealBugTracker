@@ -152,77 +152,77 @@ namespace BugTracker.Migrations
 
             ////////////////////////////////
 
-            //var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
-            //seeding DemoAdmin
-            //if (!context.Users.Any(u => u.Email == "DemoAdmin@email.com"))
-            //{
-            //    userManager.Create(new ApplicationUser
-            //    {
-            //        UserName = "DemoAdmin@email.com",
-            //        Email = "DemoAdmin@email.com",
-            //        FirstName = "DemoAdmin",
-            //        LastName = "DemoAdmin",
-            //        DisplayName = "DemoAdmin",
-            //    }, "Demo!234");
-            //}
-            //var administratorUserID4 = userManager.FindByEmail("DemoAdmin@email.com").Id;
-            //userManager.AddToRole(administratorUserID, "DemoAdmin");
+         //   var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+        //    seeding DemoAdmin
+            if (!context.Users.Any(u => u.Email == "DemoAdmin@email.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoAdmin@email.com",
+                    Email = "DemoAdmin@email.com",
+                    FirstName = "DemoAdmin",
+                    LastName = "DemoAdmin",
+                    DisplayName = "DemoAdmin",
+                }, "Demo!234");
+            }
+            var administratorUserID4 = userManager.FindByEmail("DemoAdmin@email.com").Id;
+            userManager.AddToRole(administratorUserID, "Admin");
 
 
-            //seeding DemoPM
-
-
-
-            //if (!context.Users.Any(u => u.Email == "DemoPM@email.com"))
-            //{
-            //    userManager.Create(new ApplicationUser
-            //    {
-            //        UserName = "DemoPM@email.com",
-            //        Email = "DemoPM@email.com",
-            //        FirstName = "DemoPM",
-            //        LastName = "DemoPM",
-            //        DisplayName = "DemoPM",
-            //    }, "Demo!234");
-            //}
-            //var adminID2 = userManager.FindByEmail("DemoPM@email.com").Id;
-            //userManager.AddToRole(administratorUserID, "DemoProjectManager");
-
-
-            //seeding DemoDev
+           // seeding DemoPM
 
 
 
-            //if (!context.Users.Any(u => u.Email == "DemoDev@email.com"))
-            //{
-            //    userManager.Create(new ApplicationUser
-            //    {
-            //        UserName = "DemoDev@email.com",
-            //        Email = "DemoDev@email.com",
-            //        FirstName = "DemoDev",
-            //        LastName = "DemoDev",
-            //        DisplayName = "DemoDev",
-            //    }, "Demo!234");
-            //}
-            //var administratorUserID5 = userManager.FindByEmail("DemoDev@email.com").Id;
-            //userManager.AddToRole(administratorUserID5, "DemoDeveloper");
+            if (!context.Users.Any(u => u.Email == "DemoPM@email.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoPM@email.com",
+                    Email = "DemoPM@email.com",
+                    FirstName = "DemoPM",
+                    LastName = "DemoPM",
+                    DisplayName = "DemoPM",
+                }, "Demo!234");
+            }
+            var adminID2 = userManager.FindByEmail("DemoPM@email.com").Id;
+            userManager.AddToRole(administratorUserID, "ProjectManager");
+
+
+           // seeding DemoDev
+
+
+
+            if (!context.Users.Any(u => u.Email == "DemoDev@email.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoDev@email.com",
+                    Email = "DemoDev@email.com",
+                    FirstName = "DemoDev",
+                    LastName = "DemoDev",
+                    DisplayName = "DemoDev",
+                }, "Demo!234");
+            }
+            var administratorUserID5 = userManager.FindByEmail("DemoDev@email.com").Id;
+            userManager.AddToRole(administratorUserID5, "Developer");
 
             //seeding DemoSubmitter
 
 
 
-            //if (!context.Users.Any(u => u.Email == "DemoSub@email.com"))
-            //{
-            //    userManager.Create(new ApplicationUser
-            //    {
-            //        UserName = "DemoSub@email.com",
-            //        Email = "DemoSub@email.com",
-            //        FirstName = "DemoSub",
-            //        LastName = "DemoSub",
-            //        DisplayName = "DemoSub",
-            //    }, "Demo!234");
-            //}
-            //var administratorUserID6 = userManager.FindByEmail("DemoSub@email.com").Id;
-            //userManager.AddToRole(administratorUserID6, "DemoSubmitter");
+            if (!context.Users.Any(u => u.Email == "DemoSub@email.com"))
+            {
+                userManager.Create(new ApplicationUser
+                {
+                    UserName = "DemoSub@email.com",
+                    Email = "DemoSub@email.com",
+                    FirstName = "DemoSub",
+                    LastName = "DemoSub",
+                    DisplayName = "DemoSub",
+                }, "Demo!234");
+            }
+            var administratorUserID6 = userManager.FindByEmail("DemoSub@email.com").Id;
+            userManager.AddToRole(administratorUserID6, "Submitter");
         }
     }
 }

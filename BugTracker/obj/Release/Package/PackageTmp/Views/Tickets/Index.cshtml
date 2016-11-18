@@ -21,10 +21,10 @@
 </p>}
 
 
-    <table class="stripe hover table">
+    <table class="table table-striped table-hover ">
 
-        <thead>
-            <tr>
+        <thead >
+            <tr class="danger">
                 <th>
                     @*@Html.DisplayNameFor(model => model.AssignedToUser.FirstName)*@
                     <p>Ticket Number</p>
@@ -57,7 +57,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="success">
                     <td>
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
@@ -76,36 +76,39 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
 
-                    
+
                     @if (User.IsInRole("Admin") || User.IsInRole("ProjectManager"))
                     {
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Details", "Details", new { id = item.Id })</button>
-                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
-                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("Assign", "Assign", new { id = item.Id })</button>
-                        <button type="button" class="btn-xs btn-default">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
-                        <div class="btn-group">
-                            <button type="button" class="btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                Comments<span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("View", "Index", "TicketComments", new {id @*ticketid*@ = item.Id }, null)</li>
-                                <li>@Html.ActionLink("Create", "Create", "TicketComments", new { ticketid = item.Id }, null)</li>
-                            </ul>
-                        </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
-                                Attachments<span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("View ", "Index", "TicketAttachments", new { ticketid = item.Id }, null)</li>
-                                <li>@Html.ActionLink("Create", "Create", "TicketAttachments", new { ticketid = item.Id }, null)</li>
-                            </ul>
-                        </div>
-                    </div>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn-xs btn-default">@Html.ActionLink("Details", "Details", new { id = item.Id })</button>
+                                <button type="button" class="btn-xs btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
+                                <button type="button" class="btn-xs btn-default">@Html.ActionLink("Assign", "Assign", new { id = item.Id })</button>
+                                <button type="button" class="btn-xs btn-warning">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn-xs btn-info dropdown-toggle" data-toggle="dropdown">
+                                        Comments<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>@Html.ActionLink("View", "Index", "TicketComments", new
+                               {
+                                   id @*ticketid*@ = item.Id
+                               }, null)</li>
+                                        <li>@Html.ActionLink("Create", "Create", "TicketComments", new { ticketid = item.Id }, null)</li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn-xs btn-danger dropdown-toggle" data-toggle="dropdown">
+                                        Attachments<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>@Html.ActionLink("List", "Index", "TicketAttachments", new { ticketid = item.Id }, null)</li>
+                                        <li>@Html.ActionLink("Create", "Create", "TicketAttachments", new { ticketid = item.Id }, null)</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-            </td>}
+                        </td>}
                     else
                     {
                         <td>
@@ -113,9 +116,10 @@
 
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default">@Html.ActionLink("Edit", "Edit", new { id = item.Id })</button>
-                                <button type="button" class="btn btn-default">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <button type="button" class="btn btn-warning">@Html.ActionLink("History",@*"Details",*@"Index", "TicketHistories", new { id = item.Id }, null)</button>
+                               
+                                 <div class="btn-group">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
                                         Comments<span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
@@ -124,7 +128,7 @@
                                     </ul>
                                 </div>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
                                         Attachments<span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
@@ -132,12 +136,12 @@
                                         <li><button type="submit">@Html.ActionLink("Create", "Create", "TicketAttachments", new { ticketid = item.Id }, null)</button></li>
                                     </ul>
                                 </div>
+                                
+                            @if (User.IsInRole("Developer"))
+                            {
+                                <button type="button" class="btn btn-default">@Html.ActionLink("Resolved", "Delete", new { id = item.Id})</button>
+                            }
                             </div>
-
-
-                            @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>||</span>
-                            @Html.ActionLink("Comments", "Index", "TicketComments", new { ticketid = item.Id }, null)<span>||</span>
-                            @Html.ActionLink("Attachments", "Index", "TicketAttachments", new { ticketid = item.Id }, null)*@
                         </td>
                     }
                 </tr>
@@ -167,7 +171,7 @@ else
 }*@
 
     <!--jQuery-->
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>
+    @*<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"></script>*@
 
 
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

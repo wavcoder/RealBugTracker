@@ -59,7 +59,7 @@
  
 
 
-        @if (User.IsInRole("Admin")|| (User.IsInRole("ProjectManager")))
+        @if (User.IsInRole("Admin") || (User.IsInRole("ProjectManager")))
         {
             <div class="form-group">
                 @Html.LabelFor(model => model.TicketStatusId, "TicketStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,7 +75,13 @@
                     @Html.DropDownList("AssignedToUserId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
                 </div>
-            </div>}
+            </div>
+        }
+        else
+        {
+            @Html.HiddenFor(model => model.TicketStatusId)
+            @Html.HiddenFor(model => model.AssignedToUserId)
+        }
             <br /><br />
             <hr />
 

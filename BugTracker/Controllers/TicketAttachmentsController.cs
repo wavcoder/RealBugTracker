@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BugTracker.Models;
 using System.IO;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace BugTracker.Controllers
 {
@@ -69,7 +70,7 @@ namespace BugTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id, TicketId,FilePath,Description,UserId,FileUrl")] TicketAttachments ticketAttachments, HttpPostedFileBase attachment)
+        public async Task<ActionResult>Create([Bind(Include = "Id, TicketId,FilePath,Description,UserId,FileUrl")] TicketAttachments ticketAttachments, HttpPostedFileBase attachment)
         {
             var ticketHistory = new TicketHistories();
             var tickets = new Tickets();
@@ -88,6 +89,17 @@ namespace BugTracker.Controllers
               
                 if (ModelState.IsValid)
                 {
+                    //Send Notification
+                    var developer = db.Users.Find(tickets.AssignedToUserId);
+                    if (developer != null && developer.Email != null)
+                    {
+                        var svc = new EmailService();
+                        var msg = new IdentityMessage();
+                        msg.Destination = developer.Email;
+                        msg.Subject = "Bug Tracker Update: " + tickets.Title;
+                        msg.Body = ("An attachment has been added to Ticket ID: " + tickets.Id + " - " + tickets.Title);
+                        await svc.SendAsync(msg);
+                    }
                     //Ticket History
                     ticketHistory.TicketId = ticketAttachments.TicketId;
                     ticketHistory.Property = "Added Attachment";

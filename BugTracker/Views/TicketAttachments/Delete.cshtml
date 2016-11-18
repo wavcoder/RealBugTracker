@@ -27,13 +27,13 @@
             @Html.DisplayFor(model => model.User.FirstName)
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.FilePath)
-        </dt>
+        </dt>*@
 
-        <dd>
+        @*<dd>
             @Html.DisplayFor(model => model.FilePath)
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Description)
@@ -64,11 +64,12 @@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
+        <p>
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
+            <input type="submit" value="Delete" class="btn btn-default" /> 
           
         </div>
+            </p>
         <p>
             <button class="btn btn-default">
                 @Html.ActionLink("Back to List", "Index")

@@ -20,7 +20,7 @@
     </div>
     <hr />
     <h4>Choose Role(s) To Be Assigned: </h4>
-    @Html.ListBox("SelectedRoles", Model.roleList)
+    @Html.ListBox("SelectedRoles", Model.roleList, new { @style="color:black"})
     <h6>
         <em>
             (To choose multiple roles "Control + click" )
@@ -28,7 +28,7 @@
     </h6>
     <hr />
 
-    <button type="submit">
+    <button class ="btn-default" type="submit">
         Submit
     </button>
 }
